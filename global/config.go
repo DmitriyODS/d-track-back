@@ -26,7 +26,7 @@ var Config ServiceConfig
 
 func init() {
 	if err := godotenv.Load(); err != nil {
-		log.Fatal(err)
+		log.Println(".env file not found err:", err)
 	}
 
 	Config = ServiceConfig{
