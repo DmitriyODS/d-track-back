@@ -21,7 +21,7 @@ func NewHttpTransport(svcEps v1.Endpoints) http.Handler {
 	// создаём конфиг для CORS
 	corsConfig := cors.Config{
 		AllowAllOrigins: true,
-		AllowHeaders:    []string{global.HeaderAuthenticationKey},
+		AllowHeaders:    []string{global.HeaderAuthenticationKey, "Content-Type"},
 		MaxAge:          12 * time.Hour,
 	}
 

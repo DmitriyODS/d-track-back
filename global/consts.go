@@ -11,5 +11,5 @@ const JwtClaimsCtxKey = "JwtClaimsCtxKey"
 // CurSessionCtxKey - ключ для сохранения сессии в Context
 const CurSessionCtxKey = "CurSessionCtxKey"
 
-// HeaderAuthenticationKey - ключь заголовка в котором содержится JWT токен
+// HeaderAuthenticationKey - ключ заголовка в котором содержится JWT токен
 const HeaderAuthenticationKey = "Authentication"

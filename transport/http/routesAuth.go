@@ -11,7 +11,7 @@ import (
 )
 
 func initAuthRoutes(r *gin.RouterGroup, svcEps v1.Endpoints) {
-	r.GET("/login", func(c *gin.Context) {
+	r.POST("/login", func(c *gin.Context) {
 		data := dtoV1.Auth{}
 
 		// выполняем привязку запроса к структуре запроса
