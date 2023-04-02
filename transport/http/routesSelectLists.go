@@ -15,10 +15,10 @@ func initSelectListsRoutes(r *gin.RouterGroup, svcEps v1.Endpoints) {
 		list := dtoV1.RequestList{}
 
 		// выполняем привязку запроса к структуре запроса
-		if err := c.ShouldBindJSON(&list); err != nil {
-			c.JSON(http.StatusInternalServerError, global.NewErrResponseData(global.InternalServerErr))
-			return
-		}
+		//if err := c.ShouldBindJSON(&list); err != nil {
+		//	c.JSON(http.StatusInternalServerError, global.NewErrResponseData(global.InternalServerErr))
+		//	return
+		//}
 
 		// пытаемся получить мета-инфу о пользователе, чтобы сохранить её в новый контекст
 		v, ok := c.Get(global.JwtClaimsCtxKey)
@@ -44,10 +44,10 @@ func initSelectListsRoutes(r *gin.RouterGroup, svcEps v1.Endpoints) {
 		list := dtoV1.RequestList{}
 
 		// выполняем привязку запроса к структуре запроса
-		if err := c.ShouldBindJSON(&list); err != nil {
-			c.JSON(http.StatusInternalServerError, global.NewErrResponseData(global.InternalServerErr))
-			return
-		}
+		//if err := c.ShouldBindJSON(&list); err != nil {
+		//	c.JSON(http.StatusInternalServerError, global.NewErrResponseData(global.InternalServerErr))
+		//	return
+		//}
 
 		// пытаемся получить мета-инфу о пользователе, чтобы сохранить её в новый контекст
 		v, ok := c.Get(global.JwtClaimsCtxKey)
@@ -73,10 +73,10 @@ func initSelectListsRoutes(r *gin.RouterGroup, svcEps v1.Endpoints) {
 		list := dtoV1.RequestList{}
 
 		// выполняем привязку запроса к структуре запроса
-		if err := c.ShouldBindJSON(&list); err != nil {
-			c.JSON(http.StatusInternalServerError, global.NewErrResponseData(global.InternalServerErr))
-			return
-		}
+		//if err := c.ShouldBindJSON(&list); err != nil {
+		//	c.JSON(http.StatusInternalServerError, global.NewErrResponseData(global.InternalServerErr))
+		//	return
+		//}
 
 		// пытаемся получить мета-инфу о пользователе, чтобы сохранить её в новый контекст
 		v, ok := c.Get(global.JwtClaimsCtxKey)
@@ -102,10 +102,10 @@ func initSelectListsRoutes(r *gin.RouterGroup, svcEps v1.Endpoints) {
 		list := dtoV1.RequestList{}
 
 		// выполняем привязку запроса к структуре запроса
-		if err := c.ShouldBindJSON(&list); err != nil {
-			c.JSON(http.StatusInternalServerError, global.NewErrResponseData(global.InternalServerErr))
-			return
-		}
+		//if err := c.ShouldBindJSON(&list); err != nil {
+		//	c.JSON(http.StatusInternalServerError, global.NewErrResponseData(global.InternalServerErr))
+		//	return
+		//}
 
 		// пытаемся получить мета-инфу о пользователе, чтобы сохранить её в новый контекст
 		v, ok := c.Get(global.JwtClaimsCtxKey)
