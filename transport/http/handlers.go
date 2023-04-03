@@ -23,6 +23,7 @@ func NewHttpTransport(svcEps v1.Endpoints) http.Handler {
 		AllowAllOrigins: true,
 		AllowHeaders:    []string{global.HeaderAuthenticationKey, "Content-Type"},
 		MaxAge:          12 * time.Hour,
+		AllowMethods:    []string{"GET", "POST", "PUT", "DELETE"},
 	}
 
 	// дрбалвяем ещё много всякого разного (middlewares)
