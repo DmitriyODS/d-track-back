@@ -6,8 +6,8 @@ import (
 )
 
 type selectLists interface {
-	GetSelectListEmployees(ctx context.Context, filters, sorts map[string]string) ([]domain.SelectList, error)
-	GetSelectListPosition(ctx context.Context, filters, sorts map[string]string) ([]domain.SelectList, error)
-	GetSelectListLevelAccesses(ctx context.Context, filters, sorts map[string]string) ([]domain.LevelAccess, error)
-	GetSelectListFreedomType(ctx context.Context, filters, sorts map[string]string) ([]domain.SelectList, error)
+	GetSelectListEmployees(ctx context.Context) ([]domain.SelectList, error)
+	GetSelectListPosition(ctx context.Context) ([]domain.SelectList, error)
+	GetSelectListLevelAccesses(ctx context.Context) ([]domain.LevelAccess, error)
+	GetSelectListFreedomType(ctx context.Context) ([]domain.SelectList, error)
 }

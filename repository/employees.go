@@ -6,7 +6,7 @@ import (
 )
 
 type repositoryEmployees interface {
-	SelectEmployees(ctx context.Context, filters, sorts map[string]string) ([]domain.Employee, error)
+	SelectEmployees(ctx context.Context, fioFilter string, isArchive bool) ([]domain.Employee, error)
 	SelectEmployeeByID(ctx context.Context, id uint64) (domain.Employee, error)
 	CreateEmployee(ctx context.Context, employee domain.Employee) (uint64, error)
 	UpdateEmployee(ctx context.Context, employee domain.Employee) (uint64, error)

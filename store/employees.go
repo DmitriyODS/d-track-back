@@ -3,7 +3,9 @@ package store
 import (
 	"context"
 	"database/sql"
+	"fmt"
 	"gitlab.com/ddda/d-track/d-track-back/domain"
+	"gitlab.com/ddda/d-track/d-track-back/global"
 )
 
 const (
@@ -162,8 +164,23 @@ func updateWithPassEmployeePlaceholder(employee domain.Employee) []interface{} {
 	}
 }
 
-func (s *Store) SelectEmployees(ctx context.Context, filters, sorts map[string]string) ([]domain.Employee, error) {
-	rows, err := s.Query(ctx, selectEmployeesQuery)
+func (s *Store) SelectEmployees(ctx context.Context, fioFilter string, isArchive bool) ([]domain.Employee, error) {
+	sqlWithFilters := ""
+	if isArchive {
+		sqlWithFilters = fmt.Sprintf("%s WHERE e.freedom_type_id=%d", selectEmployeesQuery,
+			global.EmployeeFreedomTypeFired)
+	} else {
+		sqlWithFilters = fmt.Sprintf("%s WHERE e.freedom_type_id!=%d", selectEmployeesQuery,
+			global.EmployeeFreedomTypeFired)
+	}
+
+	if fioFilter != "" {
+		sqlWithFilters = fmt.Sprintf("%s AND e.fio ILIKE '%s'", sqlWithFilters, "%"+fioFilter+"%")
+	}
+
+	sqlWithFilters = fmt.Sprintf("%s ORDER by date_appointments DESC", sqlWithFilters)
+
+	rows, err := s.Query(ctx, sqlWithFilters)
 	if err == sql.ErrNoRows {
 		return []domain.Employee{}, nil
 	}

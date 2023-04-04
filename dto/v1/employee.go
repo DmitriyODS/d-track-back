@@ -1,5 +1,10 @@
 package v1
 
+type RequestEmployeeListFilters struct {
+	IsArchive bool   `form:"is_archive"`
+	FioFilter string `form:"fio_filter"`
+}
+
 type Employee struct {
 	ID                 uint64      `json:"id"`
 	FIO                string      `json:"fio"`

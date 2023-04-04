@@ -32,12 +32,7 @@ func (eps *SelectListEndpoints) makeSelectListEndpoints(s service.Service, middl
 
 func makeEmployeesSelectListEndpoint(s service.Service) global.Endpoint {
 	return func(ctx context.Context, request interface{}) (response global.ResponseData, err error) {
-		req, ok := request.(dtoV1.RequestList)
-		if !ok {
-			return global.NewErrResponseData(global.IncorrectBodyRequestErr), global.IncorrectBodyRequestErr
-		}
-
-		domains, err := s.GetSelectListEmployees(ctx, req.Filters, req.Sorts)
+		domains, err := s.GetSelectListEmployees(ctx)
 		if err != nil {
 			return global.NewErrResponseData(err), err
 		}
@@ -53,12 +48,7 @@ func makeEmployeesSelectListEndpoint(s service.Service) global.Endpoint {
 
 func makePositionsSelectListEndpoint(s service.Service) global.Endpoint {
 	return func(ctx context.Context, request interface{}) (response global.ResponseData, err error) {
-		req, ok := request.(dtoV1.RequestList)
-		if !ok {
-			return global.NewErrResponseData(global.IncorrectBodyRequestErr), global.IncorrectBodyRequestErr
-		}
-
-		domains, err := s.GetSelectListPosition(ctx, req.Filters, req.Sorts)
+		domains, err := s.GetSelectListPosition(ctx)
 		if err != nil {
 			return global.NewErrResponseData(err), err
 		}
@@ -74,12 +64,7 @@ func makePositionsSelectListEndpoint(s service.Service) global.Endpoint {
 
 func makeLevelAccessesSelectListEndpoint(s service.Service) global.Endpoint {
 	return func(ctx context.Context, request interface{}) (response global.ResponseData, err error) {
-		req, ok := request.(dtoV1.RequestList)
-		if !ok {
-			return global.NewErrResponseData(global.IncorrectBodyRequestErr), global.IncorrectBodyRequestErr
-		}
-
-		domains, err := s.GetSelectListLevelAccesses(ctx, req.Filters, req.Sorts)
+		domains, err := s.GetSelectListLevelAccesses(ctx)
 		if err != nil {
 			return global.NewErrResponseData(err), err
 		}
@@ -95,12 +80,7 @@ func makeLevelAccessesSelectListEndpoint(s service.Service) global.Endpoint {
 
 func makeFreedomTypesSelectListEndpoint(s service.Service) global.Endpoint {
 	return func(ctx context.Context, request interface{}) (response global.ResponseData, err error) {
-		req, ok := request.(dtoV1.RequestList)
-		if !ok {
-			return global.NewErrResponseData(global.IncorrectBodyRequestErr), global.IncorrectBodyRequestErr
-		}
-
-		domains, err := s.GetSelectListFreedomType(ctx, req.Filters, req.Sorts)
+		domains, err := s.GetSelectListFreedomType(ctx)
 		if err != nil {
 			return global.NewErrResponseData(err), err
 		}

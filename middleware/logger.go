@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-func (l *Logger) GetListEmployees(ctx context.Context, filters, sorts map[string]string) (resLst []domain.Employee, err error) {
+func (l *Logger) GetListEmployees(ctx context.Context, fioFilter string, isArchive bool) (resLst []domain.Employee, err error) {
 	log.Println("Start GetListEmployees")
 	defer func() {
 		if err != nil {
@@ -17,7 +17,7 @@ func (l *Logger) GetListEmployees(ctx context.Context, filters, sorts map[string
 		log.Println("End GetListEmployees")
 	}()
 
-	return l.next.GetListEmployees(ctx, filters, sorts)
+	return l.next.GetListEmployees(ctx, fioFilter, isArchive)
 }
 
 func (l *Logger) GetEmployeeByID(ctx context.Context, id uint64) (res domain.Employee, err error) {
@@ -67,7 +67,7 @@ func (l *Logger) CheckLevelAccessByEmployeeID(ctx context.Context, id uint64, le
 	return l.next.CheckLevelAccessByEmployeeID(ctx, id, levelAccess)
 }
 
-func (l *Logger) GetSelectListEmployees(ctx context.Context, filters, sorts map[string]string) (resLst []domain.SelectList, err error) {
+func (l *Logger) GetSelectListEmployees(ctx context.Context) (resLst []domain.SelectList, err error) {
 	log.Println("Start GetSelectListEmployees")
 	defer func() {
 		if err != nil {
@@ -78,10 +78,10 @@ func (l *Logger) GetSelectListEmployees(ctx context.Context, filters, sorts map[
 		log.Println("End GetSelectListEmployees")
 	}()
 
-	return l.next.GetSelectListEmployees(ctx, filters, sorts)
+	return l.next.GetSelectListEmployees(ctx)
 }
 
-func (l *Logger) GetSelectListPosition(ctx context.Context, filters, sorts map[string]string) (resLst []domain.SelectList, err error) {
+func (l *Logger) GetSelectListPosition(ctx context.Context) (resLst []domain.SelectList, err error) {
 	log.Println("Start GetSelectListPosition")
 	defer func() {
 		if err != nil {
@@ -92,10 +92,10 @@ func (l *Logger) GetSelectListPosition(ctx context.Context, filters, sorts map[s
 		log.Println("End GetSelectListPosition")
 	}()
 
-	return l.next.GetSelectListPosition(ctx, filters, sorts)
+	return l.next.GetSelectListPosition(ctx)
 }
 
-func (l *Logger) GetSelectListLevelAccesses(ctx context.Context, filters, sorts map[string]string) (resLst []domain.LevelAccess, err error) {
+func (l *Logger) GetSelectListLevelAccesses(ctx context.Context) (resLst []domain.LevelAccess, err error) {
 	log.Println("Start GetSelectListLevelAccesses")
 	defer func() {
 		if err != nil {
@@ -106,10 +106,10 @@ func (l *Logger) GetSelectListLevelAccesses(ctx context.Context, filters, sorts 
 		log.Println("End GetSelectListLevelAccesses")
 	}()
 
-	return l.next.GetSelectListLevelAccesses(ctx, filters, sorts)
+	return l.next.GetSelectListLevelAccesses(ctx)
 }
 
-func (l *Logger) GetSelectListFreedomType(ctx context.Context, filters, sorts map[string]string) (resLst []domain.SelectList, err error) {
+func (l *Logger) GetSelectListFreedomType(ctx context.Context) (resLst []domain.SelectList, err error) {
 	log.Println("Start GetSelectListFreedomType")
 	defer func() {
 		if err != nil {
@@ -120,5 +120,5 @@ func (l *Logger) GetSelectListFreedomType(ctx context.Context, filters, sorts ma
 		log.Println("End GetSelectListFreedomType")
 	}()
 
-	return l.next.GetSelectListFreedomType(ctx, filters, sorts)
+	return l.next.GetSelectListFreedomType(ctx)
 }

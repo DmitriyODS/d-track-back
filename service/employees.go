@@ -6,7 +6,7 @@ import (
 )
 
 type employees interface {
-	GetListEmployees(ctx context.Context, filters, sorts map[string]string) ([]domain.Employee, error)
+	GetListEmployees(ctx context.Context, fioFilter string, isArchive bool) ([]domain.Employee, error)
 	GetEmployeeByID(ctx context.Context, id uint64) (domain.Employee, error)
 	StoreEmployee(ctx context.Context, employee domain.Employee) (uint64, error)
 }

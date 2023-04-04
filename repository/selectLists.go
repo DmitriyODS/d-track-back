@@ -6,8 +6,8 @@ import (
 )
 
 type repositorySelectLists interface {
-	SelectSelectListEmployees(ctx context.Context, filters, sorts map[string]string) ([]domain.SelectList, error)
-	SelectSelectListPositions(ctx context.Context, filters, sorts map[string]string) ([]domain.SelectList, error)
-	SelectSelectListLevelAccesses(ctx context.Context, filters, sorts map[string]string) ([]domain.LevelAccess, error)
-	SelectSelectListFreedomTypes(ctx context.Context, filters, sorts map[string]string) ([]domain.SelectList, error)
+	SelectSelectListEmployees(ctx context.Context) ([]domain.SelectList, error)
+	SelectSelectListPositions(ctx context.Context) ([]domain.SelectList, error)
+	SelectSelectListLevelAccesses(ctx context.Context) ([]domain.LevelAccess, error)
+	SelectSelectListFreedomTypes(ctx context.Context) ([]domain.SelectList, error)
 }

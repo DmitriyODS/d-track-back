@@ -13,15 +13,13 @@ import (
 
 func initEmployeeRoutes(r *gin.RouterGroup, svcEps v1.Endpoints) {
 	r.GET("/getList", func(c *gin.Context) {
-		list := dtoV1.RequestList{}
+		list := dtoV1.RequestEmployeeListFilters{}
 
-		// выполняем привязку запроса к структуре запроса
-		// TODO: пока этого не делаем, нужно разобраться с запросами GET и где отправлять фильтры
-		//  в строке запроса???
-		//if err := c.ShouldBindJSON(&list); err != nil {
-		//	c.JSON(http.StatusInternalServerError, global.NewErrResponseData(global.InternalServerErr))
-		//	return
-		//}
+		// выполняем привязку строки запроса к структуре запроса
+		if err := c.ShouldBindQuery(&list); err != nil {
+			c.JSON(http.StatusInternalServerError, global.NewErrResponseData(global.InternalServerErr))
+			return
+		}
 
 		// пытаемся получить мета-инфу о пользователе, чтобы сохранить её в новый контекст
 		v, ok := c.Get(global.JwtClaimsCtxKey)

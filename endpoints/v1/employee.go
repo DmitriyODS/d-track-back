@@ -29,12 +29,12 @@ func (eps *EmployeeEndpoints) makeEmployeeEndpoints(s service.Service, middlewar
 
 func makeGetEmployeesListEndpoint(s service.Service) global.Endpoint {
 	return func(ctx context.Context, request interface{}) (response global.ResponseData, err error) {
-		req, ok := request.(dtoV1.RequestList)
+		req, ok := request.(dtoV1.RequestEmployeeListFilters)
 		if !ok {
 			return global.NewErrResponseData(global.IncorrectBodyRequestErr), global.IncorrectBodyRequestErr
 		}
 
-		domains, err := s.GetListEmployees(ctx, req.Filters, req.Sorts)
+		domains, err := s.GetListEmployees(ctx, req.FioFilter, req.IsArchive)
 		if err != nil {
 			return global.NewErrResponseData(err), err
 		}

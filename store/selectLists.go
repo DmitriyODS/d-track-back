@@ -42,7 +42,7 @@ func selectLevelAccessPlaceholder(la *domain.LevelAccess) []interface{} {
 	}
 }
 
-func (s *Store) SelectSelectListEmployees(ctx context.Context, filters, sorts map[string]string) ([]domain.SelectList, error) {
+func (s *Store) SelectSelectListEmployees(ctx context.Context) ([]domain.SelectList, error) {
 	rows, err := s.Query(ctx, selectSelectListEmployeesQuery)
 	if err == sql.ErrNoRows {
 		return []domain.SelectList{}, nil
@@ -66,7 +66,7 @@ func (s *Store) SelectSelectListEmployees(ctx context.Context, filters, sorts ma
 	return selectLsts, rows.Err()
 }
 
-func (s *Store) SelectSelectListPositions(ctx context.Context, filters, sorts map[string]string) ([]domain.SelectList, error) {
+func (s *Store) SelectSelectListPositions(ctx context.Context) ([]domain.SelectList, error) {
 	rows, err := s.Query(ctx, selectSelectListPositionsQuery)
 	if err == sql.ErrNoRows {
 		return []domain.SelectList{}, nil
@@ -90,7 +90,7 @@ func (s *Store) SelectSelectListPositions(ctx context.Context, filters, sorts ma
 	return selectLsts, rows.Err()
 }
 
-func (s *Store) SelectSelectListLevelAccesses(ctx context.Context, filters, sorts map[string]string) ([]domain.LevelAccess, error) {
+func (s *Store) SelectSelectListLevelAccesses(ctx context.Context) ([]domain.LevelAccess, error) {
 	rows, err := s.Query(ctx, selectLevelAccessesQuery)
 	if err == sql.ErrNoRows {
 		return []domain.LevelAccess{}, nil
@@ -114,7 +114,7 @@ func (s *Store) SelectSelectListLevelAccesses(ctx context.Context, filters, sort
 	return levelAccesses, rows.Err()
 }
 
-func (s *Store) SelectSelectListFreedomTypes(ctx context.Context, filters, sorts map[string]string) ([]domain.SelectList, error) {
+func (s *Store) SelectSelectListFreedomTypes(ctx context.Context) ([]domain.SelectList, error) {
 	rows, err := s.Query(ctx, selectSelectListFreedomTypesQuery)
 	if err == sql.ErrNoRows {
 		return []domain.SelectList{}, nil

@@ -37,13 +37,13 @@ func (a *Auth) checkLevelAccess(ctx context.Context, section global.Section, met
 	return context.WithValue(ctx, global.CurSessionCtxKey, true), nil
 }
 
-func (a *Auth) GetListEmployees(ctx context.Context, filters, sorts map[string]string) (resLst []domain.Employee, err error) {
+func (a *Auth) GetListEmployees(ctx context.Context, fioFilter string, isArchive bool) (resLst []domain.Employee, err error) {
 	authCtx, err := a.checkLevelAccess(ctx, global.SectionEmployees, global.MethodView)
 	if err != nil {
 		return nil, err
 	}
 
-	return a.next.GetListEmployees(authCtx, filters, sorts)
+	return a.next.GetListEmployees(authCtx, fioFilter, isArchive)
 }
 
 func (a *Auth) GetEmployeeByID(ctx context.Context, id uint64) (res domain.Employee, err error) {
@@ -79,38 +79,38 @@ func (a *Auth) CheckLevelAccessByEmployeeID(ctx context.Context, id uint64, leve
 	return a.next.CheckLevelAccessByEmployeeID(ctx, id, levelAccess)
 }
 
-func (a *Auth) GetSelectListEmployees(ctx context.Context, filters, sorts map[string]string) (resLst []domain.SelectList, err error) {
+func (a *Auth) GetSelectListEmployees(ctx context.Context) (resLst []domain.SelectList, err error) {
 	authCtx, err := a.checkLevelAccess(ctx, global.SectionSelectLists, global.MethodView)
 	if err != nil {
 		return nil, err
 	}
 
-	return a.next.GetSelectListEmployees(authCtx, filters, sorts)
+	return a.next.GetSelectListEmployees(authCtx)
 }
 
-func (a *Auth) GetSelectListPosition(ctx context.Context, filters, sorts map[string]string) (resLst []domain.SelectList, err error) {
+func (a *Auth) GetSelectListPosition(ctx context.Context) (resLst []domain.SelectList, err error) {
 	authCtx, err := a.checkLevelAccess(ctx, global.SectionSelectLists, global.MethodView)
 	if err != nil {
 		return nil, err
 	}
 
-	return a.next.GetSelectListPosition(authCtx, filters, sorts)
+	return a.next.GetSelectListPosition(authCtx)
 }
 
-func (a *Auth) GetSelectListLevelAccesses(ctx context.Context, filters, sorts map[string]string) (resLst []domain.LevelAccess, err error) {
+func (a *Auth) GetSelectListLevelAccesses(ctx context.Context) (resLst []domain.LevelAccess, err error) {
 	authCtx, err := a.checkLevelAccess(ctx, global.SectionSelectLists, global.MethodView)
 	if err != nil {
 		return nil, err
 	}
 
-	return a.next.GetSelectListLevelAccesses(authCtx, filters, sorts)
+	return a.next.GetSelectListLevelAccesses(authCtx)
 }
 
-func (a *Auth) GetSelectListFreedomType(ctx context.Context, filters, sorts map[string]string) (resLst []domain.SelectList, err error) {
+func (a *Auth) GetSelectListFreedomType(ctx context.Context) (resLst []domain.SelectList, err error) {
 	authCtx, err := a.checkLevelAccess(ctx, global.SectionSelectLists, global.MethodView)
 	if err != nil {
 		return nil, err
 	}
 
-	return a.next.GetSelectListFreedomType(authCtx, filters, sorts)
+	return a.next.GetSelectListFreedomType(authCtx)
 }
