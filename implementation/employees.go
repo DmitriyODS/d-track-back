@@ -52,7 +52,17 @@ func (bs *BasicService) StoreEmployee(ctx context.Context, employee domain.Emplo
 		return id, nil
 	}
 
-	// обновление
+	// проверим, что обновляем данные не текущего пользователя
+	claims, ok := ctx.Value(global.JwtClaimsCtxKey).(*global.JwtClaims)
+	if !ok {
+		return 0, global.InternalServerErr
+	}
+
+	if employee.ID == claims.UserID {
+		return 0, global.IncorrectUpdateUserData
+	}
+
+	// проверка корректнности заполнения полей
 	if !employee.ValidateFields(false) {
 		return 0, global.IncorrectValidFormErr
 	}

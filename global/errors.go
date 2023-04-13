@@ -17,6 +17,7 @@ var (
 
 	IncorrectValidFormErr   = errors.New("поля заполнены некорректно")
 	IncorrectLoginOrPassErr = errors.New("неверный логин, или пароль")
+	IncorrectUpdateUserData = errors.New("невозможно изменить текущего пользователя")
 	AccessRightsObsoleteErr = errors.New("права доступа устарели, перезайдите в сервис")
 	IncorrectBodyRequestErr = errors.New("тело запроса некорректно")
 	DataNotFoundErr         = errors.New("запрашиваемые данные не найдены")
@@ -24,7 +25,7 @@ var (
 
 func GetStatusCodeByErr(err error) int {
 	switch err {
-	case BadRequestErr, IncorrectValidFormErr, IncorrectBodyRequestErr, DataNotFoundErr:
+	case BadRequestErr, IncorrectValidFormErr, IncorrectBodyRequestErr, DataNotFoundErr, IncorrectUpdateUserData:
 		return http.StatusBadRequest
 	case UnauthorizedErr, IncorrectLoginOrPassErr:
 		return http.StatusUnauthorized
