@@ -11,7 +11,7 @@ type Method byte
 const (
 	SectionEmployees  Section = 6
 	SectionsCustomers         = 4
-	SectionBid                = 2
+	SectionClaims             = 2
 	SectionTasks              = 0
 	SectionSelectLists
 )

@@ -122,3 +122,45 @@ func (l *Logger) GetSelectListFreedomType(ctx context.Context) (resLst []domain.
 
 	return l.next.GetSelectListFreedomType(ctx)
 }
+
+func (l *Logger) GetListClaims(ctx context.Context, fioFilter string, isArchive bool) (claims []domain.Claim, err error) {
+	log.Println("Start GetListClaims")
+	defer func() {
+		if err != nil {
+			log.Println("End GetListClaims with err:", err)
+			return
+		}
+
+		log.Println("End GetListClaims")
+	}()
+
+	return l.next.GetListClaims(ctx, fioFilter, isArchive)
+}
+
+func (l *Logger) GetClaimByID(ctx context.Context, id uint64) (claim domain.Claim, err error) {
+	log.Printf("Start GetClaimByID with id=%d\n", id)
+	defer func() {
+		if err != nil {
+			log.Println("End GetClaimByID with err:", err)
+			return
+		}
+
+		log.Println("End GetClaimByID")
+	}()
+
+	return l.next.GetClaimByID(ctx, id)
+}
+
+func (l *Logger) StoreClaim(ctx context.Context, claim domain.Claim) (id uint64, err error) {
+	log.Println("Start StoreClaim with employee=", claim)
+	defer func() {
+		if err != nil {
+			log.Println("End StoreClaim with err:", err)
+			return
+		}
+
+		log.Printf("End StoreClaim store id=%d\n", id)
+	}()
+
+	return l.next.StoreClaim(ctx, claim)
+}

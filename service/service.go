@@ -6,4 +6,5 @@ type Service interface {
 	employees
 	selectLists
 	auth
+	claims
 }

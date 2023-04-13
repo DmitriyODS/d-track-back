@@ -14,6 +14,7 @@ type Endpoints struct {
 	AuthEndpoints
 	EmployeeEndpoints
 	SelectListEndpoints
+	ClaimEndpoints
 }
 
 // MakeEndpoints - функция возвращает объект с конечными точками
@@ -26,6 +27,7 @@ func MakeEndpoints(s service.Service, middlewares ...global.Middleware) Endpoint
 	eps.makeAuthEndpoints(s, middlewares...)
 	eps.makeEmployeeEndpoints(s, middlewares...)
 	eps.makeSelectListEndpoints(s, middlewares...)
+	eps.makeClaimEndpoints(s, middlewares...)
 
 	return eps
 }
@@ -107,5 +109,65 @@ func fromAuthDTO(l dtoV1.Auth) domain.Auth {
 		Login:    l.Login,
 		Password: l.Password,
 		JWT:      l.JWT,
+	}
+}
+
+func toCustomerDTO(c domain.Customer) dtoV1.Customer {
+	return dtoV1.Customer{
+		ID:          c.ID,
+		FIO:         c.FIO,
+		Phone:       c.Phone,
+		Email:       c.Email,
+		Address:     c.Address,
+		DateCreated: c.DateCreatedUnix(),
+	}
+}
+
+func fromCustomerDTO(c dtoV1.Customer) domain.Customer {
+	return domain.Customer{
+		ID:          c.ID,
+		FIO:         c.FIO,
+		Phone:       c.Phone,
+		Email:       c.Email,
+		Address:     c.Address,
+		DateCreated: time.Unix(c.DateCreated, 0),
+	}
+}
+
+func toClaimDTO(c domain.Claim) dtoV1.Claim {
+	return dtoV1.Claim{
+		ID:                      c.ID,
+		Number:                  c.Number,
+		DateCreated:             c.DateCreatedUnix(),
+		DateCompleted:           c.DateCompletedUnix(),
+		DateEstimatedCompletion: c.DateEstimatedCompletionUnix(),
+		Customer: dtoV1.SelectList{
+			ID:    c.Customer.ID,
+			Value: c.Customer.FIO,
+		},
+		Subject:     c.Subject,
+		ServiceType: toSelectListsDTO(c.ServiceType),
+		Description: c.Description,
+		Status:      toSelectListsDTO(c.Status),
+		Executor: dtoV1.SelectList{
+			ID:    c.Executor.ID,
+			Value: c.Executor.FIO,
+		},
+	}
+}
+
+func fromClaimDTO(c dtoV1.Claim) domain.Claim {
+	return domain.Claim{
+		ID:                      c.ID,
+		Number:                  c.Number,
+		DateCreated:             time.Unix(c.DateCreated, 0),
+		DateCompleted:           time.Unix(c.DateCompleted, 0),
+		DateEstimatedCompletion: time.Unix(c.DateEstimatedCompletion, 0),
+		Customer:                domain.NewCustomer(c.Customer.ID),
+		Subject:                 c.Subject,
+		ServiceType:             fromSelectListsDTO(c.ServiceType),
+		Description:             c.Description,
+		Status:                  fromSelectListsDTO(c.Status),
+		Executor:                domain.NewEmployee(c.Executor.ID),
 	}
 }

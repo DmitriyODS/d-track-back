@@ -114,3 +114,32 @@ func (a *Auth) GetSelectListFreedomType(ctx context.Context) (resLst []domain.Se
 
 	return a.next.GetSelectListFreedomType(authCtx)
 }
+
+func (a *Auth) GetListClaims(ctx context.Context, fioFilter string, isArchive bool) ([]domain.Claim, error) {
+	authCtx, err := a.checkLevelAccess(ctx, global.SectionClaims, global.MethodView)
+	if err != nil {
+		return nil, err
+	}
+
+	return a.next.GetListClaims(authCtx, fioFilter, isArchive)
+}
+
+func (a *Auth) GetClaimByID(ctx context.Context, id uint64) (domain.Claim, error) {
+	authCtx, err := a.checkLevelAccess(ctx, global.SectionClaims, global.MethodView)
+	if err != nil {
+		return domain.Claim{}, err
+	}
+
+	return a.next.GetClaimByID(authCtx, id)
+}
+
+func (a *Auth) StoreClaim(ctx context.Context, claim domain.Claim) (uint64, error) {
+	curMethod := global.Method(global.MethodEdit)
+
+	authCtx, err := a.checkLevelAccess(ctx, global.SectionClaims, curMethod)
+	if err != nil {
+		return 0, err
+	}
+
+	return a.next.StoreClaim(authCtx, claim)
+}
