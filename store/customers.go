@@ -33,7 +33,7 @@ INSERT INTO user_data.customers(fio,
                                 email,
                                 address,
                                 date_created)
-VALUES ($1, $2, $4, $5, $6)
+VALUES ($1, $2, $3, $4, $5)
 RETURNING id;
 `
 	updateCustomerQuery = `
@@ -82,7 +82,7 @@ func (s *Store) SelectCustomers(ctx context.Context, fioFilter string, isArchive
 	sqlWithFilters := selectCustomersQuery
 
 	if fioFilter != "" {
-		sqlWithFilters = fmt.Sprintf("%s AND c.fio ILIKE '%s'", sqlWithFilters, "%"+fioFilter+"%")
+		sqlWithFilters = fmt.Sprintf("%s WHERE c.fio ILIKE '%s'", sqlWithFilters, "%"+fioFilter+"%")
 	}
 
 	sqlWithFilters = fmt.Sprintf("%s ORDER by date_created DESC", sqlWithFilters)
