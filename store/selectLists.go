@@ -14,7 +14,8 @@ FROM user_data.employees AS e
          INNER JOIN user_data.positions AS p on p.id = e.position_id
 `
 	selectSelectListCustomersQuery = `
-SELECT c.fio
+SELECT c.id,
+       c.fio
 FROM user_data.customers AS c
 ORDER BY c.fio;
 `

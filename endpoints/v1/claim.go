@@ -34,14 +34,14 @@ func makeGetClaimsListEndpoint(s service.Service) global.Endpoint {
 			return global.NewErrResponseData(global.IncorrectBodyRequestErr), global.IncorrectBodyRequestErr
 		}
 
-		domains, err := s.GetListEmployees(ctx, req.NumberFilter, req.IsArchive)
+		domains, err := s.GetListClaims(ctx, req.NumberFilter, req.IsArchive)
 		if err != nil {
 			return global.NewErrResponseData(err), err
 		}
 
-		dtoRes := make([]dtoV1.Employee, len(domains))
+		dtoRes := make([]dtoV1.Claim, len(domains))
 		for i := range domains {
-			dtoRes[i] = toEmployeeDTO(domains[i])
+			dtoRes[i] = toClaimDTO(domains[i])
 		}
 
 		return global.NewResponseData(dtoRes), nil
@@ -55,23 +55,23 @@ func makeGetClaimByIDEndpoint(s service.Service) global.Endpoint {
 			return global.NewErrResponseData(global.IncorrectBodyRequestErr), global.IncorrectBodyRequestErr
 		}
 
-		employee, err := s.GetEmployeeByID(ctx, req.ID)
+		claim, err := s.GetClaimByID(ctx, req.ID)
 		if err != nil {
 			return global.NewErrResponseData(err), err
 		}
 
-		return global.NewResponseData(toEmployeeDTO(employee)), nil
+		return global.NewResponseData(toClaimDTO(claim)), nil
 	}
 }
 
 func makeClaimStoreEndpoint(s service.Service) global.Endpoint {
 	return func(ctx context.Context, request interface{}) (response global.ResponseData, err error) {
-		req, ok := request.(dtoV1.Employee)
+		req, ok := request.(dtoV1.Claim)
 		if !ok {
 			return global.NewErrResponseData(global.IncorrectBodyRequestErr), global.IncorrectBodyRequestErr
 		}
 
-		id, err := s.StoreEmployee(ctx, fromEmployeeDTO(req))
+		id, err := s.StoreClaim(ctx, fromClaimDTO(req))
 		if err != nil {
 			return global.NewErrResponseData(err), err
 		}
