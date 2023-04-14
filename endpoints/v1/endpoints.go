@@ -15,6 +15,8 @@ type Endpoints struct {
 	EmployeeEndpoints
 	SelectListEndpoints
 	ClaimEndpoints
+	CustomerEndpoints
+	TaskEndpoints
 }
 
 // MakeEndpoints - функция возвращает объект с конечными точками
@@ -28,6 +30,8 @@ func MakeEndpoints(s service.Service, middlewares ...global.Middleware) Endpoint
 	eps.makeEmployeeEndpoints(s, middlewares...)
 	eps.makeSelectListEndpoints(s, middlewares...)
 	eps.makeClaimEndpoints(s, middlewares...)
+	eps.makeCustomerEndpoints(s, middlewares...)
+	eps.makeTaskEndpoints(s, middlewares...)
 
 	return eps
 }
