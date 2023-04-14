@@ -19,7 +19,7 @@ func (bs *BasicService) GetListEmployees(ctx context.Context, fioFilter string, 
 
 func (bs *BasicService) GetEmployeeByID(ctx context.Context, id uint64) (domain.Employee, error) {
 	if id == 0 {
-		return domain.Employee{}, global.BadRequestErr
+		return domain.NewEmployee(0), global.BadRequestErr
 	}
 
 	employee, err := bs.rep.SelectEmployeeByID(ctx, id)

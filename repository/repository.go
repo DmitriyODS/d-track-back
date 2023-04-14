@@ -6,5 +6,8 @@ package repository
 type Repository interface {
 	repositoryEmployees
 	repositorySelectLists
+	repositoryClaims
+	repositoryCustomers
+	repositoryTasks
 	auth
 }
