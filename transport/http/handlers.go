@@ -26,7 +26,7 @@ func NewHttpTransport(svcEps v1.Endpoints) http.Handler {
 		AllowMethods:    []string{"GET", "POST", "PUT", "DELETE"},
 	}
 
-	// дрбалвяем ещё много всякого разного (middlewares)
+	// добавляем ещё много всякого разного (middlewares)
 	r.Use(gin.CustomRecovery(RecoveryPanic), gin.Logger(), cors.New(corsConfig))
 
 	// API version 1
@@ -34,6 +34,9 @@ func NewHttpTransport(svcEps v1.Endpoints) http.Handler {
 
 	initAuthRoutes(apiV1.Group("/auth"), svcEps)
 	initEmployeeRoutes(apiV1.Group("/employees", JWTAuth()), svcEps)
+	initCustomerRoutes(apiV1.Group("/customers", JWTAuth()), svcEps)
+	initClaimRoutes(apiV1.Group("/claims", JWTAuth()), svcEps)
+	initTaskRoutes(apiV1.Group("/tasks", JWTAuth()), svcEps)
 	initSelectListsRoutes(apiV1.Group("/lists", JWTAuth()), svcEps)
 
 	return r
