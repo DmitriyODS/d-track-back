@@ -13,6 +13,11 @@ SELECT e.id,
 FROM user_data.employees AS e
          INNER JOIN user_data.positions AS p on p.id = e.position_id
 `
+	selectSelectListCustomersQuery = `
+SELECT c.fio
+FROM user_data.customers AS c
+ORDER BY c.fio;
+`
 	selectSelectListPositionsQuery = `
 SELECT id, "name"
 FROM user_data.positions
@@ -24,6 +29,18 @@ FROM user_data.level_accesses
 	selectSelectListFreedomTypesQuery = `
 SELECT id, "name"
 FROM user_data.freedom_types
+`
+	selectSelectListServicesQuery = `
+SELECT id, "name"
+FROM user_data.services;
+`
+	selectSelectListTaskStatesQuery = `
+SELECT id, "name"
+FROM user_data.task_states;
+`
+	selectSelectListClaimStatesQuery = `
+SELECT id, "name"
+FROM user_data.claim_states;
 `
 )
 
@@ -42,8 +59,8 @@ func selectLevelAccessPlaceholder(la *domain.LevelAccess) []interface{} {
 	}
 }
 
-func (s *Store) SelectSelectListEmployees(ctx context.Context) ([]domain.SelectList, error) {
-	rows, err := s.Query(ctx, selectSelectListEmployeesQuery)
+func (s *Store) selectSelectList(ctx context.Context, query string) ([]domain.SelectList, error) {
+	rows, err := s.Query(ctx, query)
 	if err == sql.ErrNoRows {
 		return []domain.SelectList{}, nil
 	}
@@ -52,7 +69,7 @@ func (s *Store) SelectSelectListEmployees(ctx context.Context) ([]domain.SelectL
 	}
 	defer rows.Close()
 
-	selectLsts := make([]domain.SelectList, 0)
+	selectLists := make([]domain.SelectList, 0)
 
 	var selectList domain.SelectList
 	for rows.Next() {
@@ -60,34 +77,22 @@ func (s *Store) SelectSelectListEmployees(ctx context.Context) ([]domain.SelectL
 			return nil, err
 		}
 
-		selectLsts = append(selectLsts, selectList)
+		selectLists = append(selectLists, selectList)
 	}
 
-	return selectLsts, rows.Err()
+	return selectLists, rows.Err()
+}
+
+func (s *Store) SelectSelectListEmployees(ctx context.Context) ([]domain.SelectList, error) {
+	return s.selectSelectList(ctx, selectSelectListEmployeesQuery)
+}
+
+func (s *Store) SelectSelectListCustomers(ctx context.Context) ([]domain.SelectList, error) {
+	return s.selectSelectList(ctx, selectSelectListCustomersQuery)
 }
 
 func (s *Store) SelectSelectListPositions(ctx context.Context) ([]domain.SelectList, error) {
-	rows, err := s.Query(ctx, selectSelectListPositionsQuery)
-	if err == sql.ErrNoRows {
-		return []domain.SelectList{}, nil
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-
-	selectLsts := make([]domain.SelectList, 0)
-
-	var selectList domain.SelectList
-	for rows.Next() {
-		if err = rows.Scan(selectSelectListPlaceholder(&selectList)...); err != nil {
-			return nil, err
-		}
-
-		selectLsts = append(selectLsts, selectList)
-	}
-
-	return selectLsts, rows.Err()
+	return s.selectSelectList(ctx, selectSelectListPositionsQuery)
 }
 
 func (s *Store) SelectSelectListLevelAccesses(ctx context.Context) ([]domain.LevelAccess, error) {
@@ -115,25 +120,17 @@ func (s *Store) SelectSelectListLevelAccesses(ctx context.Context) ([]domain.Lev
 }
 
 func (s *Store) SelectSelectListFreedomTypes(ctx context.Context) ([]domain.SelectList, error) {
-	rows, err := s.Query(ctx, selectSelectListFreedomTypesQuery)
-	if err == sql.ErrNoRows {
-		return []domain.SelectList{}, nil
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
+	return s.selectSelectList(ctx, selectSelectListFreedomTypesQuery)
+}
 
-	selectLsts := make([]domain.SelectList, 0)
+func (s *Store) SelectSelectListClaimStates(ctx context.Context) ([]domain.SelectList, error) {
+	return s.selectSelectList(ctx, selectSelectListClaimStatesQuery)
+}
 
-	var selectList domain.SelectList
-	for rows.Next() {
-		if err = rows.Scan(selectSelectListPlaceholder(&selectList)...); err != nil {
-			return nil, err
-		}
+func (s *Store) SelectSelectListTaskStates(ctx context.Context) ([]domain.SelectList, error) {
+	return s.selectSelectList(ctx, selectSelectListTaskStatesQuery)
+}
 
-		selectLsts = append(selectLsts, selectList)
-	}
-
-	return selectLsts, rows.Err()
+func (s *Store) SelectSelectListServices(ctx context.Context) ([]domain.SelectList, error) {
+	return s.selectSelectList(ctx, selectSelectListServicesQuery)
 }

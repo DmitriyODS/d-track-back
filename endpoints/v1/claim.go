@@ -29,12 +29,12 @@ func (eps *ClaimEndpoints) makeClaimEndpoints(s service.Service, middlewares ...
 
 func makeGetClaimsListEndpoint(s service.Service) global.Endpoint {
 	return func(ctx context.Context, request interface{}) (response global.ResponseData, err error) {
-		req, ok := request.(dtoV1.RequestEmployeeListFilters)
+		req, ok := request.(dtoV1.RequestClaimListFilters)
 		if !ok {
 			return global.NewErrResponseData(global.IncorrectBodyRequestErr), global.IncorrectBodyRequestErr
 		}
 
-		domains, err := s.GetListEmployees(ctx, req.FioFilter, req.IsArchive)
+		domains, err := s.GetListEmployees(ctx, req.NumberFilter, req.IsArchive)
 		if err != nil {
 			return global.NewErrResponseData(err), err
 		}

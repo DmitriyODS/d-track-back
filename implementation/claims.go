@@ -13,6 +13,6 @@ func (bs *BasicService) GetClaimByID(ctx context.Context, id uint64) (domain.Cla
 	return domain.Claim{}, nil
 }
 
-func (bs *BasicService) StoreClaim(ctx context.Context, employee domain.Claim) (uint64, error) {
+func (bs *BasicService) StoreClaim(ctx context.Context, claim domain.Claim) (uint64, error) {
 	return 0, nil
 }

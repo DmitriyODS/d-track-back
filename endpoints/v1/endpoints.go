@@ -171,3 +171,39 @@ func fromClaimDTO(c dtoV1.Claim) domain.Claim {
 		Executor:                domain.NewEmployee(c.Executor.ID),
 	}
 }
+
+func toTaskDTO(t domain.Task) dtoV1.Task {
+	return dtoV1.Task{
+		ID:                      t.ID,
+		Number:                  t.Number,
+		DateCreated:             t.DateCreatedUnix(),
+		DateCompleted:           t.DateCompletedUnix(),
+		DateEstimatedCompletion: t.DateEstimatedCompletionUnix(),
+		Name:                    t.Name,
+		Description:             t.Description,
+		Status:                  toSelectListsDTO(t.Status),
+		Creator: dtoV1.SelectList{
+			ID:    t.Creator.ID,
+			Value: t.Creator.FIO,
+		},
+		Executor: dtoV1.SelectList{
+			ID:    t.Executor.ID,
+			Value: t.Executor.FIO,
+		},
+	}
+}
+
+func fromTaskDTO(t dtoV1.Task) domain.Task {
+	return domain.Task{
+		ID:                      t.ID,
+		Number:                  t.Number,
+		Creator:                 domain.NewEmployee(t.Creator.ID),
+		Name:                    t.Name,
+		Description:             t.Description,
+		DateCreated:             time.Unix(t.DateCreated, 0),
+		DateCompleted:           time.Unix(t.DateCompleted, 0),
+		DateEstimatedCompletion: time.Unix(t.DateEstimatedCompletion, 0),
+		Status:                  fromSelectListsDTO(t.Status),
+		Executor:                domain.NewEmployee(t.Executor.ID),
+	}
+}
