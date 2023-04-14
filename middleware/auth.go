@@ -49,7 +49,7 @@ func (a *Auth) GetListEmployees(ctx context.Context, fioFilter string, isArchive
 func (a *Auth) GetEmployeeByID(ctx context.Context, id uint64) (res domain.Employee, err error) {
 	authCtx, err := a.checkLevelAccess(ctx, global.SectionEmployees, global.MethodView)
 	if err != nil {
-		return domain.Employee{}, err
+		return domain.NewEmployee(0), err
 	}
 
 	return a.next.GetEmployeeByID(authCtx, id)
@@ -115,6 +115,42 @@ func (a *Auth) GetSelectListFreedomType(ctx context.Context) (resLst []domain.Se
 	return a.next.GetSelectListFreedomType(authCtx)
 }
 
+func (a *Auth) GetSelectListCustomers(ctx context.Context) ([]domain.SelectList, error) {
+	authCtx, err := a.checkLevelAccess(ctx, global.SectionSelectLists, global.MethodView)
+	if err != nil {
+		return nil, err
+	}
+
+	return a.next.GetSelectListCustomers(authCtx)
+}
+
+func (a *Auth) GetSelectListServices(ctx context.Context) ([]domain.SelectList, error) {
+	authCtx, err := a.checkLevelAccess(ctx, global.SectionSelectLists, global.MethodView)
+	if err != nil {
+		return nil, err
+	}
+
+	return a.next.GetSelectListServices(authCtx)
+}
+
+func (a *Auth) GetSelectListClaimStates(ctx context.Context) ([]domain.SelectList, error) {
+	authCtx, err := a.checkLevelAccess(ctx, global.SectionSelectLists, global.MethodView)
+	if err != nil {
+		return nil, err
+	}
+
+	return a.next.GetSelectListClaimStates(authCtx)
+}
+
+func (a *Auth) GetSelectListTaskStates(ctx context.Context) ([]domain.SelectList, error) {
+	authCtx, err := a.checkLevelAccess(ctx, global.SectionSelectLists, global.MethodView)
+	if err != nil {
+		return nil, err
+	}
+
+	return a.next.GetSelectListTaskStates(authCtx)
+}
+
 func (a *Auth) GetListClaims(ctx context.Context, fioFilter string, isArchive bool) ([]domain.Claim, error) {
 	authCtx, err := a.checkLevelAccess(ctx, global.SectionClaims, global.MethodView)
 	if err != nil {
@@ -127,7 +163,7 @@ func (a *Auth) GetListClaims(ctx context.Context, fioFilter string, isArchive bo
 func (a *Auth) GetClaimByID(ctx context.Context, id uint64) (domain.Claim, error) {
 	authCtx, err := a.checkLevelAccess(ctx, global.SectionClaims, global.MethodView)
 	if err != nil {
-		return domain.Claim{}, err
+		return domain.NewClaim(0), err
 	}
 
 	return a.next.GetClaimByID(authCtx, id)
@@ -142,4 +178,62 @@ func (a *Auth) StoreClaim(ctx context.Context, claim domain.Claim) (uint64, erro
 	}
 
 	return a.next.StoreClaim(authCtx, claim)
+}
+
+func (a *Auth) GetListTasks(ctx context.Context, numberFilter string, isArchive bool) ([]domain.Task, error) {
+	authCtx, err := a.checkLevelAccess(ctx, global.SectionTasks, global.MethodView)
+	if err != nil {
+		return nil, err
+	}
+
+	return a.next.GetListTasks(authCtx, numberFilter, isArchive)
+}
+
+func (a *Auth) GetTaskByID(ctx context.Context, id uint64) (domain.Task, error) {
+	authCtx, err := a.checkLevelAccess(ctx, global.SectionTasks, global.MethodView)
+	if err != nil {
+		return domain.NewTask(0), err
+	}
+
+	return a.next.GetTaskByID(authCtx, id)
+}
+
+func (a *Auth) StoreTask(ctx context.Context, task domain.Task) (uint64, error) {
+	curMethod := global.Method(global.MethodEdit)
+
+	authCtx, err := a.checkLevelAccess(ctx, global.SectionTasks, curMethod)
+	if err != nil {
+		return 0, err
+	}
+
+	return a.next.StoreTask(authCtx, task)
+}
+
+func (a *Auth) GetListCustomers(ctx context.Context, fioFilter string, isArchive bool) ([]domain.Customer, error) {
+	authCtx, err := a.checkLevelAccess(ctx, global.SectionCustomers, global.MethodView)
+	if err != nil {
+		return nil, err
+	}
+
+	return a.next.GetListCustomers(authCtx, fioFilter, isArchive)
+}
+
+func (a *Auth) GetCustomerByID(ctx context.Context, id uint64) (domain.Customer, error) {
+	authCtx, err := a.checkLevelAccess(ctx, global.SectionCustomers, global.MethodView)
+	if err != nil {
+		return domain.NewCustomer(0), err
+	}
+
+	return a.next.GetCustomerByID(authCtx, id)
+}
+
+func (a *Auth) StoreCustomer(ctx context.Context, customer domain.Customer) (uint64, error) {
+	curMethod := global.Method(global.MethodEdit)
+
+	authCtx, err := a.checkLevelAccess(ctx, global.SectionCustomers, curMethod)
+	if err != nil {
+		return 0, err
+	}
+
+	return a.next.StoreCustomer(authCtx, customer)
 }

@@ -5,6 +5,8 @@ package service
 type Service interface {
 	employees
 	selectLists
+	customers
+	tasks
 	auth
 	claims
 }

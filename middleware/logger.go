@@ -123,6 +123,62 @@ func (l *Logger) GetSelectListFreedomType(ctx context.Context) (resLst []domain.
 	return l.next.GetSelectListFreedomType(ctx)
 }
 
+func (l *Logger) GetSelectListCustomers(ctx context.Context) (lst []domain.SelectList, err error) {
+	log.Println("Start GetSelectListCustomers")
+	defer func() {
+		if err != nil {
+			log.Println("End GetSelectListCustomers with err:", err)
+			return
+		}
+
+		log.Println("End GetSelectListCustomers")
+	}()
+
+	return l.next.GetSelectListCustomers(ctx)
+}
+
+func (l *Logger) GetSelectListServices(ctx context.Context) (lst []domain.SelectList, err error) {
+	log.Println("Start GetSelectListServices")
+	defer func() {
+		if err != nil {
+			log.Println("End GetSelectListServices with err:", err)
+			return
+		}
+
+		log.Println("End GetSelectListServices")
+	}()
+
+	return l.next.GetSelectListServices(ctx)
+}
+
+func (l *Logger) GetSelectListClaimStates(ctx context.Context) (lst []domain.SelectList, err error) {
+	log.Println("Start GetSelectListClaimStates")
+	defer func() {
+		if err != nil {
+			log.Println("End GetSelectListClaimStates with err:", err)
+			return
+		}
+
+		log.Println("End GetSelectListClaimStates")
+	}()
+
+	return l.next.GetSelectListClaimStates(ctx)
+}
+
+func (l *Logger) GetSelectListTaskStates(ctx context.Context) (lst []domain.SelectList, err error) {
+	log.Println("Start GetSelectListTaskStates")
+	defer func() {
+		if err != nil {
+			log.Println("End GetSelectListTaskStates with err:", err)
+			return
+		}
+
+		log.Println("End GetSelectListTaskStates")
+	}()
+
+	return l.next.GetSelectListTaskStates(ctx)
+}
+
 func (l *Logger) GetListClaims(ctx context.Context, fioFilter string, isArchive bool) (claims []domain.Claim, err error) {
 	log.Println("Start GetListClaims")
 	defer func() {
@@ -152,7 +208,7 @@ func (l *Logger) GetClaimByID(ctx context.Context, id uint64) (claim domain.Clai
 }
 
 func (l *Logger) StoreClaim(ctx context.Context, claim domain.Claim) (id uint64, err error) {
-	log.Println("Start StoreClaim with employee=", claim)
+	log.Println("Start StoreClaim with claim=", claim)
 	defer func() {
 		if err != nil {
 			log.Println("End StoreClaim with err:", err)
@@ -163,4 +219,88 @@ func (l *Logger) StoreClaim(ctx context.Context, claim domain.Claim) (id uint64,
 	}()
 
 	return l.next.StoreClaim(ctx, claim)
+}
+
+func (l *Logger) GetListCustomers(ctx context.Context, fioFilter string, isArchive bool) (lst []domain.Customer, err error) {
+	log.Println("Start GetListCustomers")
+	defer func() {
+		if err != nil {
+			log.Println("End GetListCustomers with err:", err)
+			return
+		}
+
+		log.Println("End GetListCustomers")
+	}()
+
+	return l.next.GetListCustomers(ctx, fioFilter, isArchive)
+}
+
+func (l *Logger) GetCustomerByID(ctx context.Context, id uint64) (c domain.Customer, err error) {
+	log.Printf("Start GetCustomerByID with id=%d\n", id)
+	defer func() {
+		if err != nil {
+			log.Println("End GetCustomerByID with err:", err)
+			return
+		}
+
+		log.Println("End GetCustomerByID")
+	}()
+
+	return l.next.GetCustomerByID(ctx, id)
+}
+
+func (l *Logger) StoreCustomer(ctx context.Context, customer domain.Customer) (id uint64, err error) {
+	log.Println("Start StoreCustomer with customer=", customer)
+	defer func() {
+		if err != nil {
+			log.Println("End StoreCustomer with err:", err)
+			return
+		}
+
+		log.Printf("End StoreCustomer store id=%d\n", id)
+	}()
+
+	return l.next.StoreCustomer(ctx, customer)
+}
+
+func (l *Logger) GetListTasks(ctx context.Context, numberFilter string, isArchive bool) (lst []domain.Task, err error) {
+	log.Println("Start GetListTasks")
+	defer func() {
+		if err != nil {
+			log.Println("End GetListTasks with err:", err)
+			return
+		}
+
+		log.Println("End GetListTasks")
+	}()
+
+	return l.next.GetListTasks(ctx, numberFilter, isArchive)
+}
+
+func (l *Logger) GetTaskByID(ctx context.Context, id uint64) (t domain.Task, err error) {
+	log.Printf("Start GetTaskByID with id=%d\n", id)
+	defer func() {
+		if err != nil {
+			log.Println("End GetTaskByID with err:", err)
+			return
+		}
+
+		log.Println("End GetTaskByID")
+	}()
+
+	return l.next.GetTaskByID(ctx, id)
+}
+
+func (l *Logger) StoreTask(ctx context.Context, task domain.Task) (id uint64, err error) {
+	log.Println("Start StoreTask with task=", task)
+	defer func() {
+		if err != nil {
+			log.Println("End StoreTask with err:", err)
+			return
+		}
+
+		log.Printf("End StoreTask store id=%d\n", id)
+	}()
+
+	return l.next.StoreTask(ctx, task)
 }

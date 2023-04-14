@@ -9,10 +9,10 @@ type Section byte
 type Method byte
 
 const (
-	SectionEmployees  Section = 6
-	SectionsCustomers         = 4
-	SectionClaims             = 2
-	SectionTasks              = 0
+	SectionEmployees Section = 6
+	SectionCustomers         = 4
+	SectionClaims            = 2
+	SectionTasks             = 0
 	SectionSelectLists
 )
 
