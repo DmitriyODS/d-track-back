@@ -9,7 +9,7 @@ type JwtClaims struct {
 	UserID         uint64 `json:"user_id,omitempty"`
 	UserPositionID uint64 `json:"user_position_id,omitempty"`
 	UserLogin      string `json:"user_login,omitempty"`
-	LevelAccess    []byte `json:"level_access,omitempty"`
+	LevelAccess    byte   `json:"level_access,omitempty"`
 	jwt.RegisteredClaims
 }
 

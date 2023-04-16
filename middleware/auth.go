@@ -20,7 +20,7 @@ func (a *Auth) checkLevelAccess(ctx context.Context, section global.Section, met
 	}
 
 	// проверим, вдруг привелегии обновились
-	check, err := a.next.CheckLevelAccessByEmployeeID(ctx, claims.UserID, claims.LevelAccess)
+	check, err := a.next.CheckLevelAccessByEmployeeID(ctx, claims.UserID, []byte{claims.LevelAccess})
 	if err != nil {
 		log.Println("GetListEmployees auth CheckLevelAccessByEmployeeID err:", err)
 		return ctx, global.InternalServerErr

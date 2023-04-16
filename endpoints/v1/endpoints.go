@@ -54,7 +54,7 @@ func toLevelAccessDTO(l domain.LevelAccess) dtoV1.LevelAccess {
 	return dtoV1.LevelAccess{
 		ID:     l.ID,
 		Name:   l.Name,
-		Access: l.Access,
+		Access: l.Access[0],
 	}
 }
 
@@ -62,7 +62,7 @@ func fromLevelAccessDTO(l dtoV1.LevelAccess) domain.LevelAccess {
 	return domain.LevelAccess{
 		ID:     l.ID,
 		Name:   l.Name,
-		Access: l.Access,
+		Access: []byte{l.Access},
 	}
 }
 

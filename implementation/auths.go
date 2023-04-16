@@ -32,7 +32,7 @@ func (bs *BasicService) AuthenticationByLogin(ctx context.Context, auth domain.A
 		UserID:           employee.ID,
 		UserPositionID:   employee.Position.ID,
 		UserLogin:        employee.Login,
-		LevelAccess:      employee.LevelAccess.Access,
+		LevelAccess:      employee.LevelAccess.Access[0],
 		RegisteredClaims: jwt.RegisteredClaims{},
 	}
 

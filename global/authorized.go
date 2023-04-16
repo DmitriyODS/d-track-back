@@ -22,7 +22,7 @@ const (
 	MethodCreate        = 3
 )
 
-func CheckLevelAccessWithClaims(levelAccess []byte, section Section, method Method) error {
+func CheckLevelAccessWithClaims(levelAccess byte, section Section, method Method) error {
 	if section == SectionSelectLists {
 		// списковая секция, списки получать могут все, ничего такого не случится
 		return nil
@@ -31,17 +31,17 @@ func CheckLevelAccessWithClaims(levelAccess []byte, section Section, method Meth
 	switch method {
 	case MethodView:
 		// для просмотра нам нужно проверить один из двух бит, т.к. привелегии идут каскадно
-		if (levelAccess[0]>>section)&3 > 0 {
+		if (levelAccess>>section)&3 > 0 {
 			return nil
 		}
 	case MethodEdit:
 		// для изменения нам нужно проверить только старший бит
-		if (levelAccess[0]>>section)&2 > 0 {
+		if (levelAccess>>section)&2 > 0 {
 			return nil
 		}
 	case MethodCreate:
 		// для создания/удаления нам нужно проверить оба бита
-		if (levelAccess[0]>>section)&3 == 3 {
+		if (levelAccess>>section)&3 == 3 {
 			return nil
 		}
 	}
