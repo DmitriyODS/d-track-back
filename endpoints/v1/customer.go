@@ -34,7 +34,7 @@ func makeGetCustomersListEndpoint(s service.Service) global.Endpoint {
 			return global.NewErrResponseData(global.IncorrectBodyRequestErr), global.IncorrectBodyRequestErr
 		}
 
-		domains, err := s.GetListCustomers(ctx, req.FioFilter, req.IsArchive)
+		domains, err := s.GetListCustomers(ctx, req.FioFilter, req.IsArchive, req.ClaimID)
 		if err != nil {
 			return global.NewErrResponseData(err), err
 		}

@@ -6,7 +6,7 @@ import (
 )
 
 type claims interface {
-	GetListClaims(ctx context.Context, numberFilter string, isArchive bool) ([]domain.Claim, error)
+	GetListClaims(ctx context.Context, numberFilter string, isArchive bool, customerID uint64) ([]domain.Claim, error)
 	GetClaimByID(ctx context.Context, id uint64) (domain.Claim, error)
 	StoreClaim(ctx context.Context, claim domain.Claim) (uint64, error)
 }

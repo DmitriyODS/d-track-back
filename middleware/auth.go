@@ -151,13 +151,13 @@ func (a *Auth) GetSelectListTaskStates(ctx context.Context) ([]domain.SelectList
 	return a.next.GetSelectListTaskStates(authCtx)
 }
 
-func (a *Auth) GetListClaims(ctx context.Context, fioFilter string, isArchive bool) ([]domain.Claim, error) {
+func (a *Auth) GetListClaims(ctx context.Context, fioFilter string, isArchive bool, customerID uint64) ([]domain.Claim, error) {
 	authCtx, err := a.checkLevelAccess(ctx, global.SectionClaims, global.MethodView)
 	if err != nil {
 		return nil, err
 	}
 
-	return a.next.GetListClaims(authCtx, fioFilter, isArchive)
+	return a.next.GetListClaims(authCtx, fioFilter, isArchive, customerID)
 }
 
 func (a *Auth) GetClaimByID(ctx context.Context, id uint64) (domain.Claim, error) {
@@ -209,13 +209,13 @@ func (a *Auth) StoreTask(ctx context.Context, task domain.Task) (uint64, error) 
 	return a.next.StoreTask(authCtx, task)
 }
 
-func (a *Auth) GetListCustomers(ctx context.Context, fioFilter string, isArchive bool) ([]domain.Customer, error) {
+func (a *Auth) GetListCustomers(ctx context.Context, fioFilter string, isArchive bool, claimID uint64) ([]domain.Customer, error) {
 	authCtx, err := a.checkLevelAccess(ctx, global.SectionCustomers, global.MethodView)
 	if err != nil {
 		return nil, err
 	}
 
-	return a.next.GetListCustomers(authCtx, fioFilter, isArchive)
+	return a.next.GetListCustomers(authCtx, fioFilter, isArchive, claimID)
 }
 
 func (a *Auth) GetCustomerByID(ctx context.Context, id uint64) (domain.Customer, error) {

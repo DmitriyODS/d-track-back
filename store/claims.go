@@ -123,7 +123,7 @@ func updateClaimPlaceholder(claim domain.Claim) []interface{} {
 	}
 }
 
-func (s *Store) SelectClaims(ctx context.Context, numberFilter string, isArchive bool) ([]domain.Claim, error) {
+func (s *Store) SelectClaims(ctx context.Context, numberFilter string, isArchive bool, customerID uint64) ([]domain.Claim, error) {
 	sqlWithFilters := ""
 	if isArchive {
 		sqlWithFilters = fmt.Sprintf("%s WHERE claim.state_id=%d", selectClaimsQuery, global.ClaimStateClose)
@@ -133,6 +133,10 @@ func (s *Store) SelectClaims(ctx context.Context, numberFilter string, isArchive
 
 	if numberFilter != "" {
 		sqlWithFilters = fmt.Sprintf("%s AND claim.number ILIKE '%s'", sqlWithFilters, "%"+numberFilter+"%")
+	}
+
+	if customerID != 0 {
+		sqlWithFilters = fmt.Sprintf("%s AND customer.id=%d", sqlWithFilters, customerID)
 	}
 
 	sqlWithFilters = fmt.Sprintf("%s ORDER by claim.date_created DESC", sqlWithFilters)

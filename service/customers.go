@@ -6,7 +6,7 @@ import (
 )
 
 type customers interface {
-	GetListCustomers(ctx context.Context, fioFilter string, isArchive bool) ([]domain.Customer, error)
+	GetListCustomers(ctx context.Context, fioFilter string, isArchive bool, claimID uint64) ([]domain.Customer, error)
 	GetCustomerByID(ctx context.Context, id uint64) (domain.Customer, error)
 	StoreCustomer(ctx context.Context, customer domain.Customer) (uint64, error)
 }

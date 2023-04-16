@@ -3,6 +3,7 @@ package v1
 type RequestClaimListFilters struct {
 	IsArchive    bool   `form:"is_archive"`
 	NumberFilter string `form:"number_filter"`
+	CustomerID   uint64 `form:"customer_id"`
 }
 
 type Claim struct {

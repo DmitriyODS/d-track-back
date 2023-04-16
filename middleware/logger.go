@@ -179,7 +179,7 @@ func (l *Logger) GetSelectListTaskStates(ctx context.Context) (lst []domain.Sele
 	return l.next.GetSelectListTaskStates(ctx)
 }
 
-func (l *Logger) GetListClaims(ctx context.Context, fioFilter string, isArchive bool) (claims []domain.Claim, err error) {
+func (l *Logger) GetListClaims(ctx context.Context, fioFilter string, isArchive bool, customerID uint64) (claims []domain.Claim, err error) {
 	log.Println("Start GetListClaims")
 	defer func() {
 		if err != nil {
@@ -190,7 +190,7 @@ func (l *Logger) GetListClaims(ctx context.Context, fioFilter string, isArchive 
 		log.Println("End GetListClaims")
 	}()
 
-	return l.next.GetListClaims(ctx, fioFilter, isArchive)
+	return l.next.GetListClaims(ctx, fioFilter, isArchive, customerID)
 }
 
 func (l *Logger) GetClaimByID(ctx context.Context, id uint64) (claim domain.Claim, err error) {
@@ -221,7 +221,7 @@ func (l *Logger) StoreClaim(ctx context.Context, claim domain.Claim) (id uint64,
 	return l.next.StoreClaim(ctx, claim)
 }
 
-func (l *Logger) GetListCustomers(ctx context.Context, fioFilter string, isArchive bool) (lst []domain.Customer, err error) {
+func (l *Logger) GetListCustomers(ctx context.Context, fioFilter string, isArchive bool, claimID uint64) (lst []domain.Customer, err error) {
 	log.Println("Start GetListCustomers")
 	defer func() {
 		if err != nil {
@@ -232,7 +232,7 @@ func (l *Logger) GetListCustomers(ctx context.Context, fioFilter string, isArchi
 		log.Println("End GetListCustomers")
 	}()
 
-	return l.next.GetListCustomers(ctx, fioFilter, isArchive)
+	return l.next.GetListCustomers(ctx, fioFilter, isArchive, claimID)
 }
 
 func (l *Logger) GetCustomerByID(ctx context.Context, id uint64) (c domain.Customer, err error) {

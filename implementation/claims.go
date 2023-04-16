@@ -7,8 +7,8 @@ import (
 	"log"
 )
 
-func (bs *BasicService) GetListClaims(ctx context.Context, numberFilter string, isArchive bool) ([]domain.Claim, error) {
-	claims, err := bs.rep.SelectClaims(ctx, numberFilter, isArchive)
+func (bs *BasicService) GetListClaims(ctx context.Context, numberFilter string, isArchive bool, customerID uint64) ([]domain.Claim, error) {
+	claims, err := bs.rep.SelectClaims(ctx, numberFilter, isArchive, customerID)
 	if err != nil {
 		log.Println("GetListClaims err:", err)
 		return nil, global.InternalServerErr

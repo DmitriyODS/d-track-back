@@ -78,11 +78,19 @@ func updateCustomerPlaceholder(customer domain.Customer) []interface{} {
 	}
 }
 
-func (s *Store) SelectCustomers(ctx context.Context, fioFilter string, isArchive bool) ([]domain.Customer, error) {
+func (s *Store) SelectCustomers(ctx context.Context, fioFilter string, _ bool, claimID uint64) ([]domain.Customer, error) {
 	sqlWithFilters := selectCustomersQuery
 
 	if fioFilter != "" {
 		sqlWithFilters = fmt.Sprintf("%s WHERE c.fio ILIKE '%s'", sqlWithFilters, "%"+fioFilter+"%")
+	}
+
+	if claimID != 0 {
+		if fioFilter != "" {
+			sqlWithFilters = fmt.Sprintf("%s AND id IN (SELECT customer_id FROM user_data.claims AS cl WHERE cl.id=%d)", sqlWithFilters, claimID)
+		} else {
+			sqlWithFilters = fmt.Sprintf("%s WHERE id IN (SELECT customer_id FROM user_data.claims AS cl WHERE cl.id=%d)", sqlWithFilters, claimID)
+		}
 	}
 
 	sqlWithFilters = fmt.Sprintf("%s ORDER by date_created DESC", sqlWithFilters)

@@ -34,7 +34,7 @@ func makeGetClaimsListEndpoint(s service.Service) global.Endpoint {
 			return global.NewErrResponseData(global.IncorrectBodyRequestErr), global.IncorrectBodyRequestErr
 		}
 
-		domains, err := s.GetListClaims(ctx, req.NumberFilter, req.IsArchive)
+		domains, err := s.GetListClaims(ctx, req.NumberFilter, req.IsArchive, req.CustomerID)
 		if err != nil {
 			return global.NewErrResponseData(err), err
 		}
