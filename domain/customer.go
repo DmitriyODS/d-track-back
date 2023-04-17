@@ -22,7 +22,17 @@ func NewCustomer(id uint64) Customer {
 	}
 }
 
-func (c Customer) ValidateFields(isCreate bool) bool {
+// ValidateFields проверяет корректность заполнения полей
+// - все поля обязательны
+func (c Customer) ValidateFields(_ bool) bool {
+	if c.FIO == "" || c.Phone == "" || c.Email == "" || c.Address == "" {
+		return false
+	}
+
+	if c.DateCreated.IsZero() {
+		return false
+	}
+
 	return true
 }
 

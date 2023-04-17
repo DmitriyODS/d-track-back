@@ -30,7 +30,33 @@ func NewTask(id uint64) Task {
 	}
 }
 
+// ValidateFields проверяет корректность заполнения полей
+// - все поля обязательны
 func (t Task) ValidateFields(isCreate bool) bool {
+	if t.Number == "" {
+		return false
+	}
+
+	if t.Creator.ID == 0 {
+		return false
+	}
+
+	if t.Name == "" {
+		return false
+	}
+
+	if t.Status.ID == 0 {
+		return false
+	}
+
+	if t.Executor.ID == 0 {
+		return false
+	}
+
+	if t.DateCreated.IsZero() {
+		return false
+	}
+
 	return true
 }
 

@@ -32,7 +32,48 @@ func NewClaim(id uint64) Claim {
 	}
 }
 
-func (c Claim) ValidateFields(isCreate bool) bool {
+// ValidateFields проверяет корректность заполнения полей:
+// - номер заявки не может быть пустым
+// - дата создания не может быть пустой
+// - ориентировочная дата выполнения не может быть пустой
+// - заказчик не может быть пустым
+// - тема не может быть пустой
+// - тип услуги не может быть пустым
+// - статус не может быть пустым
+// - исполнитель не может быть пустым
+func (c Claim) ValidateFields(_ bool) bool {
+	if c.Number == "" {
+		return false
+	}
+
+	if c.DateCreated.IsZero() {
+		return false
+	}
+
+	if c.DateEstimatedCompletion.IsZero() {
+		return false
+	}
+
+	if c.Customer.ID == 0 {
+		return false
+	}
+
+	if c.Subject == "" {
+		return false
+	}
+
+	if c.ServiceType.ID == 0 {
+		return false
+	}
+
+	if c.Status.ID == 0 {
+		return false
+	}
+
+	if c.Executor.ID == 0 {
+		return false
+	}
+
 	return true
 }
 
