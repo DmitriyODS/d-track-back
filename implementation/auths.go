@@ -31,7 +31,8 @@ func (bs *BasicService) AuthenticationByLogin(ctx context.Context, auth domain.A
 	}
 
 	// проверяем, если дата назначения ещё не наступила, то доступ не разрешаем
-	if employee.DateAppointments.After(time.Now()) {
+	// сравниваем по кол-во дней, т.к. в БД хранится только дата без времени
+	if employee.DateAppointments.Day() > time.Now().Day() {
 		return domain.Auth{}, global.EmployeeDateAppointmentsErr
 	}
 
