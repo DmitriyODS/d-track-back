@@ -15,19 +15,21 @@ var (
 	InternalServerErr = errors.New("системная ошибка, попробуйте ещё раз")
 	NotImplementedErr = errors.New("запрашиваемый метод не поддерживается")
 
-	IncorrectValidFormErr   = errors.New("поля заполнены некорректно")
-	IncorrectLoginOrPassErr = errors.New("неверный логин, или пароль")
-	IncorrectUpdateUserData = errors.New("невозможно изменить текущего пользователя")
-	AccessRightsObsoleteErr = errors.New("права доступа устарели, перезайдите в сервис")
-	IncorrectBodyRequestErr = errors.New("тело запроса некорректно")
-	DataNotFoundErr         = errors.New("запрашиваемые данные не найдены")
+	IncorrectValidFormErr       = errors.New("поля заполнены некорректно")
+	IncorrectLoginOrPassErr     = errors.New("неверный логин, или пароль")
+	EmployeeIsDismissalErr      = errors.New("сотрудник уволен")
+	EmployeeDateAppointmentsErr = errors.New("дата назначения ещё не наступила")
+	IncorrectUpdateUserData     = errors.New("невозможно изменить текущего пользователя")
+	AccessRightsObsoleteErr     = errors.New("права доступа устарели, перезайдите в сервис")
+	IncorrectBodyRequestErr     = errors.New("тело запроса некорректно")
+	DataNotFoundErr             = errors.New("запрашиваемые данные не найдены")
 )
 
 func GetStatusCodeByErr(err error) int {
 	switch err {
 	case BadRequestErr, IncorrectValidFormErr, IncorrectBodyRequestErr, DataNotFoundErr, IncorrectUpdateUserData:
 		return http.StatusBadRequest
-	case UnauthorizedErr, IncorrectLoginOrPassErr:
+	case UnauthorizedErr, IncorrectLoginOrPassErr, EmployeeIsDismissalErr, EmployeeDateAppointmentsErr:
 		return http.StatusUnauthorized
 	case ForbiddenErr, AccessRightsObsoleteErr:
 		return http.StatusForbidden

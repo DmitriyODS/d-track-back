@@ -1,6 +1,9 @@
 package domain
 
-import "time"
+import (
+	"gitlab.com/ddda/d-track/d-track-back/global"
+	"time"
+)
 
 type Employee struct {
 	ID                 uint64
@@ -32,6 +35,11 @@ func NewEmployee(id uint64) Employee {
 		DateAppointments:   time.Time{},
 		DateOfDismissal:    time.Time{},
 	}
+}
+
+// IsDismissal проверяет, уволен ли сотрудник
+func (e Employee) IsDismissal() bool {
+	return e.FreedomType.ID == global.EmployeeFreedomTypeFired
 }
 
 func (e Employee) ValidateFields(isCreate bool) bool {

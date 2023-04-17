@@ -6,6 +6,7 @@ import (
 	"gitlab.com/ddda/d-track/d-track-back/domain"
 	"gitlab.com/ddda/d-track/d-track-back/global"
 	"log"
+	"time"
 )
 
 func (bs *BasicService) AuthenticationByLogin(ctx context.Context, auth domain.Auth) (domain.Auth, error) {
@@ -19,8 +20,19 @@ func (bs *BasicService) AuthenticationByLogin(ctx context.Context, auth domain.A
 		return domain.Auth{}, global.InternalServerErr
 	}
 
+	// проверяем, если сотрудник не найден, то доступ не разрешаем
 	if employee.ID == 0 {
 		return domain.Auth{}, global.IncorrectLoginOrPassErr
+	}
+
+	// проверяем, если сотрудник уволен доступ не разрешаем
+	if employee.IsDismissal() {
+		return domain.Auth{}, global.EmployeeIsDismissalErr
+	}
+
+	// проверяем, если дата назначения ещё не наступила, то доступ не разрешаем
+	if employee.DateAppointments.After(time.Now()) {
+		return domain.Auth{}, global.EmployeeDateAppointmentsErr
 	}
 
 	auth.Password = ""
