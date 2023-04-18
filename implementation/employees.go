@@ -52,14 +52,47 @@ func (bs *BasicService) StoreEmployee(ctx context.Context, employee domain.Emplo
 		return id, nil
 	}
 
-	// проверим, что обновляем данные не текущего пользователя
+	// если id администратора, то нельзя менять уровень доступа, роль и увольнять сотрудника
+	if employee.ID == global.EmployeeAdminID {
+		if employee.FreedomType.ID == global.EmployeeFreedomTypeFired {
+			return 0, global.NotFiredAdminUser
+		}
+
+		if employee.LevelAccess.ID != global.EmployeeLevelAccessAdmin {
+			return 0, global.NotEditLevelAccessAdminUser
+		}
+
+		if employee.Position.ID != global.EmployeePositionAdmin {
+			return 0, global.NotEditRoleAdminUser
+		}
+	}
+
+	// получаем данные текущего пользователя
 	claims, ok := ctx.Value(global.JwtClaimsCtxKey).(*global.JwtClaims)
 	if !ok {
 		return 0, global.InternalServerErr
 	}
 
+	// если id сотрудника совпадает с id текущего пользователя, то нельзя менять уровень доступа, роль и увольнять сотрудника
 	if employee.ID == claims.UserID {
-		return 0, global.IncorrectUpdateUserData
+		// получаем данные сотрудника до изменения
+		oldEmployee, err := bs.rep.SelectEmployeeByID(ctx, employee.ID)
+		if err != nil {
+			log.Println("StoreEmployee select old employee err:", err)
+			return 0, global.InternalServerErr
+		}
+
+		if employee.FreedomType.ID == global.EmployeeFreedomTypeFired {
+			return 0, global.NotFiredYourselfUser
+		}
+
+		if employee.LevelAccess.ID != oldEmployee.LevelAccess.ID {
+			return 0, global.NotEditLevelAccessYourselfUser
+		}
+
+		if employee.Position.ID != oldEmployee.Position.ID {
+			return 0, global.NotEditRoleYourselfUser
+		}
 	}
 
 	// проверка корректнности заполнения полей

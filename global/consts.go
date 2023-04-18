@@ -19,3 +19,12 @@ const CurSessionCtxKey = "CurSessionCtxKey"
 
 // HeaderAuthenticationKey - ключ заголовка в котором содержится JWT токен
 const HeaderAuthenticationKey = "Authentication"
+
+// EmployeeAdminID - id администратора
+const EmployeeAdminID = 1
+
+// EmployeeLevelAccessAdmin - уровень доступа администратора
+const EmployeeLevelAccessAdmin = 1
+
+// EmployeePositionAdmin - роль администратора
+const EmployeePositionAdmin = 3
